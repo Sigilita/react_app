@@ -1,6 +1,8 @@
 import React from "react"
 import Checkbox from './checkbox'
 
+// This struct contains the data of a Person and renders the information 
+// on the front end app
 class Person extends React.Component{
     render(){
         const props = this.props;

@@ -1,84 +1,43 @@
-/*import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
-*/
 import React, {Component} from "react"
-import logo from './logo.svg';
 import './App.css';
-import Person from './Component/Person'
-import PeopleList from './Component/PersonList'
-import Form from './Component/SubmitPerson'
+import Home from './Routes/Home'
+import AddPerson from './Routes/AddPerson'
+import UpdatePerson from './Routes/UpdatePerson'
+import DeletePerson from './Routes/DeletePerson'
+import { BrowserRouter,Route,Switch, Link } from 'react-router-dom';     
 
 class App extends Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      apiResponse: [],
-      peopleArray: []
-    };
-  }
-
-  callAPI(){
-    fetch("http://localhost:8000/app/people/all")
-    .then( response => response.json())
-    .then(
-        // handle the result
-        (result) => {
-            this.setState({
-                apiResponse : result
-            });
-        },
-        // Handle error 
-        (error) => {
-            this.setState({
-                error
-            })
-        },
-    )
-
-  }
-
-  componentDidMount(){
-    this.callAPI();
-  }
   render() {
-    const {error, apiResponse} = this.state;
-    if(error){
-        return <div>Error loading data</div>
-    }else{
-        return(
-            <div>
-              <div><PeopleList peopleArray = {apiResponse}/></div>
-              <div><Form/></div>
-            </div>
-        );
-    }    
+    return(
+      <BrowserRouter>
+      <div>
+          <Link to="/">Home</Link>
+          <Link to="/add">Add</Link>
+          <Link to="/update">Update</Link>
+          <Link to="/delete">Delete</Link>
+      </div>
+      <Switch>
+          <Route exact path="/update" component={UpdatePerson}/>
+          <Route exact path="/delete" component={DeletePerson}/>
+          <Route exact path="/add" component={AddPerson}/>
+          <Route exact path="/" component={Home}/>
+      </Switch>
+      </BrowserRouter>
+    );   
   }
 }
 
 export default App;
 
 //      <ul>{this.state.apiResponse.map((person, i) => <Person name={person.name} email={person.email} key={i} />)}</ul>
+
+/*                <Router>
+                <Link to="/">Home</Link>
+                <Link to="/add">Add</Link>
+                <Link to="/update">Update</Link>
+                <Link to="/delete">Delete</Link>
+                <Route path="/update" component={this.Update} />
+                <Route path="/add" component={this.C} />
+                <Route exact path="/" component={this.Retrieve} />
+                <Route path="/delete" component={this.Delete} /></Router>
+*/
